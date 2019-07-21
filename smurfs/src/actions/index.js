@@ -4,8 +4,10 @@
 */
 import axios from "axios"
 
-export const LOADING="LOADING";
-export const SUCCESS = "SUCCESS";
+export const LOADING_ADDSMURF = "LOADING_ADDSMURF";
+export const LOADING_FETCHSMURFS="LOADING_FETCHSMURFS";
+export const SUCCESS_ADDSMURF = "SUCCESS_ADDSMURF"
+export const SUCCESS_FETCHSMURFS="SUCCESS_FETCHSMURFS"
 export const ERROR="ERROR";
 /*
   For this project you'll need at least 2 action creators for the main portion,
@@ -17,15 +19,15 @@ export const ERROR="ERROR";
    U - updateSmurf
    D - deleteSmurf
 */
-export function fetchsmurfs( ) {
+export function fetchSmurfs( ) {
   return (dispatch) => {
-      dispatch({ type: LOADING });
+      dispatch({ type: LOADING_FETCHSMURFS });
   axios
     .get( `http://localhost:3333/smurfs/` )
           .then( response=> {
               dispatch( {
-                  type: SUCCESS,
-                  payload: response.data.message } );
+                  type: SUCCESS_FETCHSMURFS,
+                  payload: response.data } );
        })
       .catch( err => {
       dispatch( {
@@ -34,16 +36,15 @@ export function fetchsmurfs( ) {
     }); 
 };
 }
-export function addsmurf( smurf ) {
-  const smurf=[{age:"",height:"",name:""} ]
+export function addSmurf( {name, age, height} ) {
   return (dispatch) => {
-      dispatch({ type: LOADING });
+      dispatch({ type: LOADING_ADDSMURF });
   axios
-    .post( `http://localhost:3333/smurfs/`,smurf )
+    .post( `http://localhost:3333/smurfs/`,{name,age,height} )
           .then( response=> {
               dispatch( {
-                  type: SUCCESS,
-                  payload: response.data.message } );
+                  type: SUCCESS_ADDSMURF,
+                  payload: response.data } );
           } )
     
       .catch( err => {
