@@ -35,6 +35,7 @@ export function fetchsmurfs( ) {
 };
 }
 export function addsmurf( smurf ) {
+  const smurf=[{age:"",height:"",name:""} ]
   return (dispatch) => {
       dispatch({ type: LOADING });
   axios
