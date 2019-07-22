@@ -1,87 +1,59 @@
-import React, {Component} from 'react';
-import axios from 'axios';
-import {connect} from 'react-redux';
-import {addSmurf} from '../actions'
+import React, {Component} from "react";
 
 class SmurfForm extends Component {
 	constructor(props) {
 		super(props);
-        this.state={
-            smurfs:[],
-			smurf: {
-                age: "",
-				height: "",
-				name: "",
-			
-			}
+		this.state = {
+			name: "",
+			height: "",
+			age: "",
 		};
 	}
 
-	
-	handleSubmit = e => {
-		e.preventDefault();
-		this.props.addSmurf(this.state.smurf);
-		this.setState( {
-			
-			smurf: {
-                age: "",
-				height: "",
-				name: "",
-			
-			}
-		});
-}
 	handleInputChange = (e) => {
 		this.setState({[e.target.name]: e.target.value});
 	};
 
-	render() {
-		return (
-
-
-<div className="SmurfForm">
-
-    <form onSubmit={this.handleSubmit}>
-    <input
-    onChange={this.handleInputChange}
-    placeholder="age"
-    value={this.state.age}
-    name="age"
-    />
-    <input
-    onChange={this.handleInputChange}
-    placeholder="height"
-    value={this.state.height}
-    name="height"
-    />
-    <input
-        onChange={this.handleInputChange}
-        placeholder="name"
-        value={this.state.name}
-        name="name"
-    />
-        <button type="submit">Add to the village</button>
-        </form>
-        </div>
-    );
-}
-}
-const mapStateToProps=state => {
-    return {
-        smurfs: state.smurfs,
-        smurf: state.smurf,
-        addSmurf:state.addSmurf
-        
+    handleSubmit=( e ) => {
+        e.preventDefault();
+        const {name, age, height}=this.state;
+        console.log( "before this.props.handleAddSmurf", name, age, height )
+        this.props.handleAddSmurf( {name, age, height} );
+        console.log( "after this.props.handleAddSmurf", name, age, height )
+        this.setState( {name: "", age: "", height: "", } );
+        console.log( "after this.setState", name, age, height )
     }
+
+	render() {
+		const {name, age, height} = this.state;
+		return (
+			<div className="SmurfForm">
+				<form onSubmit={this.handleSubmit}>
+                    <input
+                        type="text"
+						onChange={this.handleInputChange}
+						placeholder="name"
+						value={name}
+						name="name"
+					/>
+                    <input
+                        type="text"
+						onChange={this.handleInputChange}
+						placeholder="height"
+						value={height}
+						name="height"
+					/>
+                    <input
+                        type="text"
+						onChange={this.handleInputChange}
+						placeholder="age"
+						value={age}
+						name="age"
+					/>
+					<button type="submit">Add to the village</button>
+				</form>
+			</div>
+		);
+	}
 }
-
-const mapDispatchToProps={
-    fetch: fetch,
-    addSmurf:addSmurf
-  }
-
-
-export default connect( 
-  mapStateToProps,
-  mapDispatchToProps)( SmurfForm)
-
+export default SmurfForm;
