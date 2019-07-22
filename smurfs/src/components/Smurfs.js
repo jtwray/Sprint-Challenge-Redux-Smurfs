@@ -1,24 +1,22 @@
-import React, { Component } from 'react';
-import SmurfForm from "./SmurfForm"
-import Smurf from './Smurf';
-import {connect} from "react-redux"
+import React from 'react';
+import Smurf from "./Smurf";
 
-class Smurfs extends Component {
+const Smurfs=(props)=> {
  
-  render() {
+
     return (
       <div className="Smurfs">
         <h1>Smurf Village</h1>
         <ul>
-          {this.props.smurfs&&this.props.smurfs.map(smurf => {
+          {props.smurfs&&props.smurfs.map(smurf => {
             return ( <div>
-              
+              <Smurf
+                smurf={smurf}
               key={smurf.name}  
-              name={this.props.smurf.name}
-              id={smurf.id}
-              age={smurf.age}
-              height={smurf.height}
+              name={smurf.name}
+             
               />
+              
               
               </div>
             );
@@ -28,24 +26,7 @@ class Smurfs extends Component {
     );
 
   }
-}
-const mapStateToProps=state => {
-  return {
-    smurfs:state.smurfs,
-    fetchingSmurfs: state.fetchingSmurfs
-  }
-}
 
-  const mapDispatchToProps={
-    fetch:fetch
-  }
+export default Smurfs;
 
 
-export default connect( 
-  mapStateToProps,
-  mapDispatchToProps)(Smurfs)
-
-Smurf.defaultProps = {
- smurfs: [],
-};
-;
