@@ -34,24 +34,18 @@ export function fetchSmurfs( ) {
         type: ERROR, 
         payload: "Check .get address :(" } );
     }); 
-};
+  };
+  
 }
-export function addSmurf( {name, age, height} ) {
-  return (dispatch) => {
-      dispatch({ type: LOADING_ADDSMURF });
+export const addSmurf = ({ name, age, height }) => dispatch => {
+  dispatch({ type: LOADING_ADDSMURF });
   axios
-    .post( `http://localhost:3333/smurfs/`,{name,age,height} )
-          .then( response=> {
-              dispatch( {
-                  type: SUCCESS_ADDSMURF,
-                  payload: response.data } );
-          } )
-    
-      .catch( err => {
-      dispatch( {
-        type: ERROR, 
-        payload: "smurf not added yo :(" } );
+    .post('http://localhost:3333/smurfs', { name, age, height })
+    .then(res => {
+      dispatch({  type: SUCCESS_ADDSMURF, payload: res.data });
+    })
+    .catch(err => {
+      dispatch({ type: ERROR,  payload: err });
     });
-
 };
-}
+
